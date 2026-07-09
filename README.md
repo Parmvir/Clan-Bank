@@ -116,14 +116,11 @@ src/test/java/com/creepsinc/clanbank/
   ClanBankPluginTest.java    Run this to launch RuneLite with the plugin loaded
 ```
 
-## Why this doesn't need Jagex/RuneLite approval concerns
+## Network use
 
 This plugin only ever makes HTTP requests to a server you control — GETs to
 render status as text on screen, and POSTs (submitting a borrow/return
 request) that are functionally identical to a member typing a Discord slash
 command, still requiring officer approval. It never calls any RuneLite
 input API, never clicks or queues in-game actions, and never reads anything
-beyond the logged-in player's own display name. That's the same category as
-plugins like loot trackers or GE price checkers that are already on the
-official Plugin Hub — the network calls aren't game automation, they're a
-UI shortcut to a request an officer still has to approve.
+beyond the logged-in player's own display name.
