@@ -1,0 +1,11 @@
+.gradle/
+build/
+out/
+.idea/
+*.iml
+.DS_Store
+profiles.json
+# Stale pre-built plugin jar — build fresh with ./gradlew instead of
+# committing a binary that goes out of sync with source. Doesn't touch
+# gradle/wrapper/gradle-wrapper.jar, which is required for ./gradlew itself.
+/*.jar

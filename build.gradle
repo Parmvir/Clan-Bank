@@ -1,0 +1,53 @@
+plugins {
+	id 'java'
+}
+
+def runeLiteVersion = 'latest.release'
+
+repositories {
+	mavenLocal()
+	maven {
+		url = 'https://repo.runelite.net'
+	}
+	mavenCentral()
+}
+
+dependencies {
+	compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion
+	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
+	annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
+
+	testImplementation group: 'net.runelite', name: 'client', version: runeLiteVersion
+	testImplementation group: 'junit', name: 'junit', version: '4.13.2'
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_11
+	targetCompatibility = JavaVersion.VERSION_11
+}
+
+group = 'com.creepsinc'
+version = '1.0.0'
+
+// Launches RuneLite with this plugin already loaded, for local development.
+// Defined as a real task (rather than relying on IntelliJ's "Run main()"
+// gutter action, which delegates to an ad-hoc synthetic task that doesn't
+// reliably pick up VM options) so the required JVM flags are always applied
+// the same way whether run from a terminal (./gradlew runPlugin) or by
+// double-clicking it in IntelliJ's Gradle tool window under Tasks > application.
+task runPlugin(type: JavaExec) {
+	group = 'application'
+	description = 'Launches RuneLite with the Creeps Inc Clan Bank plugin loaded.'
+	classpath = sourceSets.test.runtimeClasspath
+	mainClass = 'com.creepsinc.clanbank.ClanBankPluginTest'
+	// RuneLite refuses to start without assertions enabled.
+	enableAssertions = true
+	// JDK 17+ blocks reflective access RuneLite's macOS fullscreen support
+	// needs by default; these reopen just enough of java.desktop for it.
+	jvmArgs = [
+		'--add-exports=java.desktop/com.apple.eawt=ALL-UNNAMED',
+		'--add-opens=java.desktop/sun.awt=ALL-UNNAMED',
+		'--add-opens=java.desktop/sun.awt.image=ALL-UNNAMED',
+		'--add-opens=java.desktop/sun.java2d=ALL-UNNAMED',
+	]
+}
