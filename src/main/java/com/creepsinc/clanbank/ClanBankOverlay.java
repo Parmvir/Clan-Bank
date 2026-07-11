@@ -64,8 +64,8 @@ class ClanBankOverlay extends OverlayPanel
 		// in the sidebar panel instead (click the toolbar icon).
 		panelComponent.getChildren().add(LineComponent.builder()
 			.left("Owed:")
-			.right(status.totalOutstandingGp + " / " + status.loanCapGp + " gp")
-			.rightColor(status.totalOutstandingGp >= status.loanCapGp ? Color.RED : Color.WHITE)
+			.right(status.noLimit ? status.totalOutstandingGp + " gp (no limit)" : status.totalOutstandingGp + " / " + status.loanCapGp + " gp")
+			.rightColor(!status.noLimit && status.totalOutstandingGp >= status.loanCapGp ? Color.RED : Color.WHITE)
 			.build());
 
 		panelComponent.getChildren().add(LineComponent.builder()

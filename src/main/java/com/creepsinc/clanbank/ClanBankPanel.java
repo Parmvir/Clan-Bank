@@ -246,12 +246,14 @@ class ClanBankPanel extends PluginPanel
 		statusCard.add(label("Linked as " + status.discordTag, ColorScheme.LIGHT_GRAY_COLOR, 11f, false));
 		addSpacer(statusCard, 4);
 
-		boolean overCap = status.totalOutstandingGp >= status.loanCapGp;
+		boolean overCap = !status.noLimit && status.totalOutstandingGp >= status.loanCapGp;
 		JPanel owedRow = new JPanel(new BorderLayout());
 		owedRow.setBackground(CARD_BACKGROUND);
 		owedRow.add(label("Owed", ColorScheme.LIGHT_GRAY_COLOR, 12f, false), BorderLayout.WEST);
 		JLabel owedValue = label(
-			String.format("%,d / %,d gp", status.totalOutstandingGp, status.loanCapGp),
+			status.noLimit
+				? String.format("%,d gp (no limit)", status.totalOutstandingGp)
+				: String.format("%,d / %,d gp", status.totalOutstandingGp, status.loanCapGp),
 			overCap ? ColorScheme.PROGRESS_ERROR_COLOR : Color.WHITE,
 			12f,
 			true

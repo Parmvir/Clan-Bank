@@ -12,6 +12,7 @@ public class ClanBankStatus
 	public String clanName;
 	public String discordTag;
 	public long loanCapGp;
+	public boolean noLimit;
 	public long totalOutstandingGp;
 	public int pendingCount;
 	public List<LoanEntry> loans;
